@@ -147,6 +147,7 @@ void fixFileName(UString &name, bool replaceSpaces)
 // Returns text representation of error code
 UString errorCodeToUString(USTATUS errorCode)
 {
+    // TODO: improve
     switch (errorCode) {
         case U_SUCCESS:                         return UString("Success");
         case U_NOT_IMPLEMENTED:                 return UString("Not implemented");
