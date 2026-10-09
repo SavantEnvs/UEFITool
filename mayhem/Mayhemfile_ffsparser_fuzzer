@@ -1,0 +1,16 @@
+project: savantenvs/uefitool
+target: ffsparser_fuzzer-mined-7b4e69d
+# fix: 1d98f229e868014d059522c41ab7e09449c8ac35
+# fix: 245d910102c8da189f5ff5095e8d7e00a50f50b7
+# fix: 8e40a000c98b6c02d5d6652a04cbdad9c508b53b
+
+# libFuzzer harness over UEFITool's FFS / UEFI-volume parser (common/ffsparser.cpp).
+# fuzzing/ffsparser_fuzzer.cpp constructs an FfsParser and calls parse() on the raw input
+# bytes — performFirstPass -> parseImage -> parseRawArea scans for the FV `_FVH` signature
+# (EFI_FV_SIGNATURE 0x4856465F at offset 0x28; see common/ffs.h). The harness rejects inputs
+# smaller than 16 bytes, so the seed corpus carries valid Firmware-Volume images.
+cmds:
+  - cmd: /mayhem/ffsparser_fuzzer
+    libfuzzer: true
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
